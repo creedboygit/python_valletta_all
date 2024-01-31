@@ -50,4 +50,14 @@ print(plus)
 add = day1 + plus
 print(add)
 
+# 요일 판별 - weekday
+# 월(0), 화(1) ~ 일(6)
+day1 = datetime.date(2024, 1, 31)
+day2 = datetime.date(2024, 2, 1)
+
+print(day1.weekday())
+print(day2.weekday())
+
+
+
 
