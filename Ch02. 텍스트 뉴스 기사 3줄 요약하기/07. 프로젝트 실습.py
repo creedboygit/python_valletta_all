@@ -18,6 +18,7 @@ if __name__ == "__main__":
 
     # 기사 이미지 디코딩
     path = "news/image.jpg"
+
     file_base64 = image[0]
 
     with open(path, 'wb') as f:
