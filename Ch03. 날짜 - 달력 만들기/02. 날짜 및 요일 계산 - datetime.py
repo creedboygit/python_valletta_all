@@ -14,3 +14,8 @@ print(day2.hour)  # 시간
 print(day2.minute)  # 분
 print(day2.second)  # 초
 
+# 날짜/시간 합치기 - combine
+day = datetime.datetime(2024, 2, 12)
+time = datetime.time(20, 32, 11)
+dt = datetime.datetime.combine(day, time)
+print(dt)
