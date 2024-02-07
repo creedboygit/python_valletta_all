@@ -23,5 +23,3 @@ print(calendar.calendar(2024))
 
 
 
-
-
