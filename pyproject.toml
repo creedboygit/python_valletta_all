@@ -10,6 +10,7 @@ python = "^3.12"
 jupyter = "^1.0.0"
 openpyxl = "^3.1.2"
 pydev = "^0.0.1"
+pandas = "^2.2.0"
 
 
 [build-system]
