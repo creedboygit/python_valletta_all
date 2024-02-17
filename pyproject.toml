@@ -12,6 +12,8 @@ pydev = "^0.0.1"
 pandas = "^2.2.0"
 schedule = "^1.2.1"
 jupyter = "^1.0.0"
+bs4 = "^0.0.2"
+requests = "^2.31.0"
 
 
 [build-system]

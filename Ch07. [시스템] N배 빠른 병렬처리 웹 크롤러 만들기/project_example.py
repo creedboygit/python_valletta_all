@@ -3,6 +3,9 @@ import platform, psutil
 import os
 from bs4 import BeautifulSoup
 import requests
+import argparse
+import schedule
+import time
 
 # 로거 생성
 logger = logging.getLogger()
@@ -58,7 +61,7 @@ def web_crawler(url):
     print(beautifulSoup.title.string)
 
     # 기사 제목 크롤링
-    print(beautifulSoup.find("ul", attrs={"class": "type06_headline"}).get_text())
+    # print(beautifulSoup.find("ul", attrs={"class": "type06_headline"}).get_text())
 
 
 def main(cpu=3):
@@ -81,8 +84,6 @@ def main(cpu=3):
 
 
 if __name__ == "__main__":
-    import argparse
-    import schedule
 
     ''' 입력 매개변수 설정'''
     parser = argparse.ArgumentParser()
@@ -98,8 +99,21 @@ if __name__ == "__main__":
     ''')
 
     # N초에 한번씩 메인 함수 실행
-    schedule.every(interval).seconds.do(main, cpu)  # 이벤트 등록
+    job = schedule.every(interval).seconds.do(main, cpu)  # 이벤트 등록
 
     # 스케줄러 실행
+    count = 0
+
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1)
+    #
+    #     count += 1
+    #
+    #     if count > 5:
+    #         schedule.cancel_job(job)
+    #         print('스케줄러가 종료되었습니다')
+    #         break
+
     while True:
         schedule.run_pending()
