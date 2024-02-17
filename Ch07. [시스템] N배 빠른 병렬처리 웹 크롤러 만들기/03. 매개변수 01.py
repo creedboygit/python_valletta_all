@@ -6,4 +6,4 @@ if __name__ == "__main__":
     val1 = int(sys.argv[1])
     val2 = int(sys.argv[2])
 
-    print(val1, ' °öÇÏ±â ', val2, ' Àº? ', (val1 * val2))
+    print(val1, ' ê³±í•˜ê¸° ', val2, ' ì€? ', (val1 * val2))
