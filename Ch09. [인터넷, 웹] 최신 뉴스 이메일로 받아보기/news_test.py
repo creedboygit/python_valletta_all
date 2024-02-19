@@ -16,6 +16,7 @@ def crawling_title():
 
     # Select all elements with class "cc_text_item" and filter out empty titles
     titles = soup.select("div.cc_text_list.cc_text_item")
+    #
 
     print(titles)
 
@@ -23,6 +24,3 @@ def crawling_title():
     return title_list
 
 crawling_title()
-
-
-
