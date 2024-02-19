@@ -31,6 +31,13 @@ client_socket, addr = server_socket.accept()
 print('접속한 클라이언트의 주소입니다.')
 print('Connected by', addr)
 
+while True:
+    # 클라이언트가 보낸 메시지를 수신하기 위해 대기
+    data = client_socket.recv(1024)
+
+    # 수신 받은 문자열 출력
+    print('Recieved from', addr, data.decode())
+
 # 무한 루프를 돌면서
 while True:
 
