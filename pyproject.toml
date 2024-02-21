@@ -16,6 +16,7 @@ bs4 = "^0.0.2"
 requests = "^2.31.0"
 nbconvert = "^7.16.1"
 ipython = "^8.21.0"
+pyarrow = "^15.0.0"
 
 
 [build-system]
