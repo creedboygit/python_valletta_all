@@ -67,7 +67,7 @@ dic = crawl('005930')
 
 # print("======= dic: " + str(dic))
 
-dic = crawl('251340')
+dic2 = crawl('251340')
 
 # print("======= dic: " + str(dic))
 
@@ -76,8 +76,8 @@ codes = ["035720", "005930", "051910", "000660"]
 r = []
 
 for code in codes:
-    dic = crawl(code)
-    r.append(dic)
+    dic2 = crawl(code)
+    r.append(dic2)
     # print("======= dic: " + str(dic))
 print("======= r: " + str(r))
 
