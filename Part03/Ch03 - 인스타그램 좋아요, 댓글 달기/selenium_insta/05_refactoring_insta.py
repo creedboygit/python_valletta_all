@@ -48,7 +48,7 @@ def search(hashtag, scroll_times):
     driver.get(url=url)
 
     time.sleep(5)
-    print("======= driver.page_source: " + str(driver.page_source))
+    # print("======= driver.page_source: " + str(driver.page_source))
 
     # Scroll
     # for _ in range(5):
@@ -58,6 +58,22 @@ def search(hashtag, scroll_times):
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
 
+def like_comment(nth):
+    # click
+    row = (nth - 1) // 3 + 1
+    col = (nth - 1) % 3 + 1
+    # 몇번째 포스트 클릭
+    # xpath = '/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[3]/div[3]'
+    xpath = f'/html/body/div[2]/div/div/div[2]/div/div/div[1]/div[1]/div[2]/section/main/article/div/div/div/div[{row}]/div[{col}]'
+    driver.find_element(By.XPATH, xpath).click()
+
+    time.sleep(1)
+
+    # like
+    like_xpath = '/html/body/div[7]/div[1]/div/div[3]/div/div/div/div/div[2]/div/article/div/div[2]/div/div/div[2]/section[1]/span[1]/div/div'
+    driver.find_element(By.XPATH, like_xpath).click()
+
+
 # Login
 id = os.getenv("INSTA_ID")
 # pw = getpass.getpass("비밀번호를 입력해주세요. >>> ")
@@ -65,10 +81,13 @@ pw = os.getenv("INSTA_PW")
 
 login(id, pw)
 
-time.sleep(4)
+time.sleep(7)
 
 # Hashtag Search
 hashtag = "고양이"
 search(hashtag, 1)
+
+# like comment
+like_comment(10)
 
 time.sleep(20)
