@@ -422,6 +422,22 @@ files = [
 packaging = ">=23.1"
 
 [[package]]
+name = "chromedrivermanager"
+version = "0.0.1"
+description = "A simple Python library that check, update or download chrome driver"
+optional = false
+python-versions = "*"
+files = [
+    {file = "chromedrivermanager-0.0.1-py3-none-any.whl", hash = "sha256:b3a20421738643ab4d68b8516f9d6d9a8d368ce1c754290ebe3df278e13dc7cb"},
+    {file = "chromedrivermanager-0.0.1.tar.gz", hash = "sha256:9f55af0f2976630c5248182ce0070e19871f7370a73eadc48bc58dfd14e5f785"},
+]
+
+[package.dependencies]
+pypiwin32 = "*"
+pywin32 = "*"
+requests = "*"
+
+[[package]]
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
@@ -1734,6 +1750,20 @@ plugins = ["importlib-metadata"]
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "pypiwin32"
+version = "223"
+description = ""
+optional = false
+python-versions = "*"
+files = [
+    {file = "pypiwin32-223-py3-none-any.whl", hash = "sha256:67adf399debc1d5d14dffc1ab5acacb800da569754fafdc576b2a039485aa775"},
+    {file = "pypiwin32-223.tar.gz", hash = "sha256:71be40c1fbd28594214ecaecb58e7aa8b708eabfa0125c8a109ebd51edbd776a"},
+]
+
+[package.dependencies]
+pywin32 = ">=223"
+
+[[package]]
 name = "pysocks"
 version = "1.7.1"
 description = "A Python SOCKS client module. See https://github.com/Anorov/PySocks for more information."
@@ -2559,4 +2589,4 @@ h11 = ">=0.9.0,<1"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "46177e113ecad59c28c8fd5e18bcd8d04212df7adba4f74916725b28fcf13f80"
+content-hash = "88c53921a4273dbc4858ae88f11018002d9ad217006255ba1651255c2ecab9c2"
