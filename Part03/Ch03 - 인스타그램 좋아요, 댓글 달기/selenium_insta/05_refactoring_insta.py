@@ -105,6 +105,12 @@ def like_comment(nth, comment, repeat=3):
         # driver.find_element(By.XPATH, comment_xpath).send_keys(comment)
 
         '''
+        # comment_button_xpath = '//*[@aria-label="게시"]'
+        # driver.find_element(By.XPATH, comment_button_xpath).click()
+        # driver.find_element(By.XPATH, comment_xpath).send_keys(comment)
+        '''
+
+        '''
         # comment
         comment_xpath = f'/html/body/div[{divs}]/div[1]/div/div[3]/div/div/div/div/div[2]/div/article/div/div[2]/div/div/div[2]/section[3]/div/form/div/textarea'
         driver.find_element(By.XPATH, comment_xpath).click()
