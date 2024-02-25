@@ -123,7 +123,7 @@ def like_comment(nth, comment, repeat=3):
         driver.find_element(By.XPATH, comment_button_xpath).click()
         '''
 
-        time.sleep(0.8)
+        time.sleep(1)
 
         # 다음 게시물 버튼 누르기
         # next_button_xpath = f'/html/body/div[{divs}]/div[1]/div/div[3]/div/div/div/div/div[1]/div/div/div[2]/button/div/span'
