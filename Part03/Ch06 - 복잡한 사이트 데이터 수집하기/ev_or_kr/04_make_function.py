@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import pprint
+import pandas as pd
+import openpyxl
 
 
 def is_list(l, i):
@@ -71,9 +73,19 @@ if __name__ == '__main__':
     # for tr in trs[3:4]:
     # for tr in trs[:30]:
     # for tr in trs:
-    for tr in trs[3:4]:
+
+    m = []
+    # for tr in trs[3:4]:
+    for tr in trs:
         # print("======= tr: " + str(tr))
 
         row = parse_tr(tr)
-        pprint.pprint(row)
+        # pprint.pprint(row)
         # print("======= row: " + str(row))
+        m += row
+
+    # pprint.pprint(m, width=400)
+
+    df = pd.DataFrame(m)
+    print("======= df:\n" + str(df))
+    df.to_excel("seoul_busan.xlsx")
