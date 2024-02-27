@@ -30,12 +30,31 @@ print(region)
 
 # print(tds[5].text)
 
-민간공고대수 = tds[5]
-접수대수 = tds[6]
-출고대수 = tds[7]
-출고잔여대수 = tds[8]
+replace_brackets = lambda x: x.replace("(", "").replace(")", "").split(" ")[1:]
+
+민간공고대수 = replace_brackets(tds[5].text)
+접수대수 = replace_brackets(tds[6].text)
+출고대수 = replace_brackets(tds[7].text)
+출고잔여대수 = replace_brackets(tds[8].text)
 
 print(민간공고대수)
-print(접수대수)
-print(출고대수)
-print(출고잔여대수)
+# print(접수대수)
+# print(출고대수)
+# print(출고잔여대수)
+
+'''
+string1 = "<td>3679<br/> (368)<br/> (0)<br/> (736)<br/> (2575)</td>"
+print(
+    string1.replace("(", "")
+    .replace(")", "")
+    .replace("<br/>", "")
+    .replace("<td>", "")
+    .replace("</td>", "")
+    .split(" "))
+'''
+
+row = {"sido": sido, "region": region, "sep1": "민간공고대수", "sep2": "우선순위", "value": 1650}
+row2 = {"sido": sido, "region": region, "sep1": "민간공고대수", "sep2": "법인및기관", "value": 2500}
+
+print("======= row: " + str(row))
+print("======= row2: " + str(row2))
