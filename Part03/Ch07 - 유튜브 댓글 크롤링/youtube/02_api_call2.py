@@ -15,7 +15,8 @@ def youtube_search(query):
     ).execute()
 
     for item in search_response.get("items", []):
-        pprint.pprint(item, width=400)
+        # pprint.pprint(item, width=400)
+        print(item)
 
 
 if __name__ == '__main__':
