@@ -1,6 +1,7 @@
 import pprint
 import os
 import json
+import pandas as pd
 
 from googleapiclient.discovery import build
 import os
@@ -10,11 +11,11 @@ class YoutubeApi:
     def __init__(self, api_key):
         self.youtube_api = build("youtube", "v3", developerKey=api_key)
 
-    def youtube_search(self, query):
+    def video_search_list(self, query, max_results=10):
         search_response = self.youtube_api.search().list(
             q=query,
             part="id,snippet",
-            maxResults=10
+            maxResults=max_results
         ).execute()
 
         # print(search_response)
@@ -58,21 +59,43 @@ class YoutubeApi:
             maxResults=max_cnt
         ).execute()
 
+        comments = []
         for comment in comment_list_response.get("items", []):
             snippet = comment['snippet']['topLevelComment']['snippet']
             # print(json.dumps(comment))
             # print(json.dumps(snippet))
             # print(snippet['textOriginal'], snippet['authorDisplayName'], sep="-")
-            map = {"videoId": snippet['videoId'],
+            map = {"link": f"https://www.youtube.com/watch?v={snippet['videoId']}",
+                   "videoId": snippet['videoId'],
                    "textOriginal": snippet['textOriginal'],
                    "authorDisplayName": snippet['authorDisplayName']}
-            print("======= map:\n" + str(map))
+            # print("======= map:\n" + str(map))
+            comments.append(map)
+
+        return comments
+
+    def save_to_excel(self, search_results, filename):
+        df = pd.DataFrame(search_results)
+        df.to_excel(filename)
+
+    def crawl_comment_by_keyword(self, keyword, video_cnt=5):
+        video_ids = self.video_search_list(keyword, video_cnt)
+        r_video = self.video(video_ids)
+        # print("video_ids: ", r_video)
+        l = []
+        for video in r_video:
+            cnt = int(video['commentCount'])
+            if cnt > 100:
+                cnt = 100
+            comment_list = self.comment(video['video_id'], cnt)
+            l += comment_list
+        return l
 
 
 if __name__ == "__main__":
     DEVELOPER_KEY = os.getenv("YOUTUBE_API_KEY")
     api = YoutubeApi(DEVELOPER_KEY)
-    video_ids = api.youtube_search("슈카월드")
+    video_ids = api.video_search_list("슈카월드")
     # video_id = ("exgO1LFl9x8", "3VRw7UVJPQk", "8mkvyl8_4lk")
     # video_id = "rJE6bhVUNhk,exgO1LFl9x8,8mkvyl8_4lk"
 
@@ -80,4 +103,10 @@ if __name__ == "__main__":
     # for item in r_video:
     #     print(item)
 
-    api.comment('Mxqn95UzQ78', 61)
+    # comment_results = api.comment('Mxqn95UzQ78', 61)
+    # api.save_to_excel(comment_results, "엑셀.xlsx")
+
+    keyword = "핸드크림"
+
+    l = api.crawl_comment_by_keyword(keyword, 10)
+    api.save_to_excel(l, f"{keyword}.xlsx")
