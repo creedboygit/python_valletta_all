@@ -63,20 +63,30 @@ class WeeklyWorkPlan:
 
         # 날짜(row)
         for i in range(len(self.date_list)):
-            ws.cell(row=9 + i, column=2).value = self.date_list[i]
+            # ws.cell(row=9 + i, column=2).value = self.date_list[i]
+            ws.cell(row=9 + (i * 5), column=2).value = self.date_list[i]
 
         # 요일
         for i in range(len(self.days_of_week)):
-            ws.cell(row=9 + i, column=3).value = self.days_of_week[i]
+            # ws.cell(row=9 + i, column=3).value = self.days_of_week[i]
+            ws.cell(row=9 + (i * 5), column=3).value = self.days_of_week[i]
 
         # 행 삽입
-        n = 10
-        for i in range(len(self.date_list) - 1):
-            p = i * 5 + n
-            ws.insert_rows(p, 4)
+        # n = 10
+        # for i in range(len(self.date_list)):
+        #     p = i * 5 + n
+        #     ws.insert_rows(p, 4)
 
         # 셀 병합
-        ws.merge_cells('B9:B13')  # 날짜
+        k = 9
+        for i in range(len(self.date_list)):
+            # 0:9, 1:14, 2:19
+            # print(h, h + 4, sep="-")
+            h = i * 5 + k
+
+            ws.merge_cells(f'B{h}:B{h + 4}')  # 날짜
+            ws.merge_cells(f'C{h}:C{h + 4}')  # 요일
+            ws.merge_cells(f'F{h}:F{h + 4}')  # 비고
 
     def set_date(self, days=6):
         # start_date + 6일
