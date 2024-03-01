@@ -34,6 +34,12 @@ class WeeklyWorkPlan:
         end_date = "2024-03-17"
         ws['B6'] = f"({start_date} ~ {end_date})"
 
+        # 셀병합
+        ws.merge_cells('B5:F5')
+        ws.merge_cells('B6:F6')
+
+        print("타이틀 생성 완료")
+
 
 if __name__ == '__main__':
     wwp = WeeklyWorkPlan("크리드", "2024-03-11")
