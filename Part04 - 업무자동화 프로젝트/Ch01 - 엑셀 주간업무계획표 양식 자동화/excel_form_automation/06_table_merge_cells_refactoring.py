@@ -13,14 +13,16 @@ class WeeklyWorkPlan:
     days_of_week = []
     weekday_list = ['월', '화', '수', '목', '금', '토', '일']
 
-    def __init__(self, manager, start_date, sheet_no=0):
+    def __init__(self, manager, start_date, days=5, sheet_no=0):
         self.wb = Workbook()
         self.ws = self.wb.worksheets[sheet_no]
         self.manager = manager
         self.start_date = start_date
 
         # 날짜 생성
-        self.set_date()
+        # self.set_date()
+        # self.set_date(5)
+        self.set_date(days=days)
         self.set_title()
         self.set_table()
 
@@ -61,15 +63,16 @@ class WeeklyWorkPlan:
         for i in range(5):
             ws.cell(row=8, column=(i + 2)).value = col_names[i]
 
-        # 날짜(row)
+        # 날짜, 요일
         for i in range(len(self.date_list)):
             # ws.cell(row=9 + i, column=2).value = self.date_list[i]
-            ws.cell(row=9 + (i * 5), column=2).value = self.date_list[i]
+            ws.cell(row=9 + (i * 5), column=2).value = self.date_list[i]  # 날짜
+            ws.cell(row=9 + (i * 5), column=3).value = self.days_of_week[i]  # 요일
 
-        # 요일
-        for i in range(len(self.days_of_week)):
-            # ws.cell(row=9 + i, column=3).value = self.days_of_week[i]
-            ws.cell(row=9 + (i * 5), column=3).value = self.days_of_week[i]
+            # 셀 병합
+            ws.merge_cells(f'B{i * 5 + 9}:B{i * 5 + 13}')  # 날짜
+            ws.merge_cells(f'C{i * 5 + 9}:C{i * 5 + 13}')  # 요일
+            ws.merge_cells(f'F{i * 5 + 9}:F{i * 5 + 13}')  # 비고
 
         # 행 삽입
         # n = 10
@@ -78,15 +81,15 @@ class WeeklyWorkPlan:
         #     ws.insert_rows(p, 4)
 
         # 셀 병합
-        k = 9
-        for i in range(len(self.date_list)):
-            # 0:9, 1:14, 2:19
-            # print(h, h + 4, sep="-")
-            h = i * 5 + k
-
-            ws.merge_cells(f'B{h}:B{h + 4}')  # 날짜
-            ws.merge_cells(f'C{h}:C{h + 4}')  # 요일
-            ws.merge_cells(f'F{h}:F{h + 4}')  # 비고
+        # k = 9
+        # for i in range(len(self.date_list)):
+        #     # 0:9, 1:14, 2:19
+        #     # print(h, h + 4, sep="-")
+        #     h = i * 5 + k
+        #
+        #     ws.merge_cells(f'B{h}:B{h + 4}')  # 날짜
+        #     ws.merge_cells(f'C{h}:C{h + 4}')  # 요일
+        #     ws.merge_cells(f'F{h}:F{h + 4}')  # 비고
 
     def set_date(self, days=6):
         # start_date + 6일
@@ -104,5 +107,5 @@ class WeeklyWorkPlan:
 
 
 if __name__ == '__main__':
-    wwp = WeeklyWorkPlan("크리드", "2024-03-11")
+    wwp = WeeklyWorkPlan("크리드", "2024-03-11", days=5)
     wwp.save("주간업무계획표.xlsx")
