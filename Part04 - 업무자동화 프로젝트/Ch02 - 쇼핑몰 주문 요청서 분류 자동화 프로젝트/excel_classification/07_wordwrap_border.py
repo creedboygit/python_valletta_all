@@ -4,7 +4,9 @@ from datetime import datetime
 import pandas as pd
 from dateutil.utils import today
 from openpyxl import load_workbook
-from openpyxl.styles import Font, Alignment
+from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
+from openpyxl.styles.borders import BORDER_THIN
+from openpyxl.utils import get_column_letter
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", None)
@@ -64,7 +66,7 @@ class ClassificatinoExcel:
                 # print(self.order_list['상품명'].str.contains(brand_name), brand_name)
                 # asis = self.order_list['상품명'].str.contains(brand_name)
                 df_filtered = self.order_list[self.order_list['상품명'].str.contains(brand_name)]
-                df_filtered.to_excel(f"{self.path}/[쇼핑몰] {partner_name}.xlsx")
+                df_filtered.to_excel(f"{self.path}/[쇼핑몰] {partner_name}.xlsx", index=False)
             else:
                 print("없는 브랜드명입니다: ", brand_name, row["상품명"])
 
@@ -88,6 +90,32 @@ class ClassificatinoExcel:
         ws['A1'].font = Font(size=11, bold=True)
         ws.merge_cells("a1:u1")
         ws['a1'].alignment = Alignment(horizontal='left')
+
+        # 열 너비
+        # 1 ~ 25(Y)
+        for i in range(1, 25 + 1):
+            ws.column_dimensions[get_column_letter(i)].width = 13
+
+        for col_letter in ['I', 'J', 'W', 'X']:
+            ws.column_dimensions[col_letter].width = 40
+
+        for col_letter in ['A', 'V', 'H']:
+            ws.column_dimensions[col_letter].width = 26
+
+        # 컬럼명에 색상, bold
+        for row in ws.iter_rows(min_row=3, max_row=3):
+            for cell in row:
+                cell.fill = PatternFill(fgColor='cccccc', fill_type='solid')
+
+        # 주문 목록
+        for row in ws.iter_rows(min_row=4):
+            for cell in row:
+                cell.alignment = Alignment(wrap_text=True, horizontal='center', vertical='center', shrink_to_fit=True)
+                cell.fill = PatternFill(fgColor='ffffcc', fill_type='solid')
+                cell.border = Border(left=Side(border_style=BORDER_THIN),
+                                     right=Side(border_style=BORDER_THIN),
+                                     top=Side(border_style=BORDER_THIN),
+                                     bottom=Side(border_style=BORDER_THIN))
 
         wb.save(filename)
 
