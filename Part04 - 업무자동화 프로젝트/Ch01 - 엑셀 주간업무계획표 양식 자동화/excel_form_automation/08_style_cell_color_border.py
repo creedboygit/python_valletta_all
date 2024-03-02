@@ -2,7 +2,8 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment
+from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
+from openpyxl.styles.borders import BORDER_THICK, BORDER_THIN
 from openpyxl.utils import get_column_letter
 
 
@@ -105,6 +106,9 @@ class WeeklyWorkPlan:
             ws[f'{get_column_letter(i)}8'].font = Font(name="맑은 고딕", bold=True)
             ws[f'{get_column_letter(i)}8'].alignment = Alignment(horizontal='center', vertical='center')
 
+            # fill 색상 채우기
+            ws[f'{get_column_letter(i)}8'].fill = PatternFill(fgColor='cccccc', fill_type='solid')
+
         # E열 너비
         ws.column_dimensions['E'].width = 40
 
@@ -120,7 +124,31 @@ class WeeklyWorkPlan:
             ws[f'B{i}'].alignment = Alignment(horizontal='center', vertical='center')
             ws[f'C{i}'].alignment = Alignment(horizontal='center', vertical='center')
 
+        # 담당자, 시작일 fill color
+        ws['B2'].fill = PatternFill(fgColor='cccccc', fill_type='solid')
+        ws['B3'].fill = PatternFill(fgColor='cccccc', fill_type='solid')
+
+        # 테두리 설정 - border
+        border_style = Border(left=Side(border_style=BORDER_THIN),
+                              right=Side(border_style=BORDER_THIN),
+                              top=Side(border_style=BORDER_THIN),
+                              bottom=Side(border_style=BORDER_THIN))
+
+        # 담당자, 시작일 border
+        ws['B2'].border = border_style
+        ws['C2'].border = border_style
+        ws['B3'].border = border_style
+        ws['C3'].border = border_style
+
+        # 표 영역 border - 13, 18, 23 ... 38
+        # for col in ws.iter_cols(min_row=8, min_col=2, max_row=38, max_col=6):
+        for col in ws.iter_cols(min_row=8, min_col=2, max_row=len(self.date_list) * 5 + 8, max_col=6):
+            # print("======= col:\n" + str(col))
+
+            for cell in col:
+                cell.border = border_style
+
 
 if __name__ == '__main__':
-    wwp = WeeklyWorkPlan("크리드", "2024-03-11", days=5)
+    wwp = WeeklyWorkPlan("크리드", "2024-03-11", days=6)
     wwp.save("주간업무계획표.xlsx")
