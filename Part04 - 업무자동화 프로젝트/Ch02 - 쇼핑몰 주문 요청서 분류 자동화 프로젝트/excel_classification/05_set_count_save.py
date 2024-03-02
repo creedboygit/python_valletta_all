@@ -1,7 +1,9 @@
 import os
+from datetime import datetime
 
 import pandas as pd
 from dateutil.utils import today
+from openpyxl import load_workbook
 
 pd.set_option("display.max_columns", None)
 pd.set_option("display.max_rows", None)
@@ -63,9 +65,32 @@ class ClassificatinoExcel:
             else:
                 print("없는 브랜드명입니다: ", brand_name, row["상품명"])
 
+    def set_count(self):
+        filename = "2024-03-02/[쇼핑몰] 더블유데이.xlsx"
+        wb = load_workbook(filename)
+        ws = wb.active
+        # print("value: ", ws['B1'].value)
+
+        # 개수 세기
+        row_cnt = ws.max_row - 1
+        # print("cnt: ", row_cnt)
+
+        # 열 삽입
+        ws.insert_rows(1)
+        ws.insert_rows(1)
+
+        # A1
+        now_day = datetime.now().strftime("%Y-%m-%d")
+        ws['A1'] = f"발송요청내역 [총 {row_cnt}건] - {now_day}"
+
+        wb.save(filename)
+
 
 if __name__ == '__main__':
     # print("======= today:\n" + str(today()))
 
+    now_day = datetime.now().strftime("%Y-%m-%d")
+
     ce = ClassificatinoExcel("주문목록20221112.xlsx", "파트너목록.xlsx", str(today()).replace(":", "")[:10])
-    ce.classify()
+    # ce.classify()
+    ce.set_count()
