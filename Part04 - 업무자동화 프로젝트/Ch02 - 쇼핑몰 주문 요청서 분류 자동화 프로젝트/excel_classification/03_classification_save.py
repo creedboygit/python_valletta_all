@@ -1,6 +1,9 @@
 import pandas as pd
 
 
+# pd.set_option("display.max_columns", None)
+
+
 class ClassificatinoExcel:
     def __init__(self, order_xlsx_filename, partner_info_xlsx_filename):
         # 주문 목록
@@ -28,26 +31,25 @@ class ClassificatinoExcel:
         # print(self.order_list['상품명'].head())
 
     def classify(self):
-        # for i, row, in self.order_list.iterrows():
-        for i, row, in self.order_list.head(5).iterrows():
+        # for i, row, in self.order_list.head(5).iterrows():
+        for i, row, in self.order_list.iterrows():
             brand_name = ""
-            idx_partner = 0
+            partner_name = ""
             for j in range(len(self.brands)):
                 # print(self.brands[j])
                 if self.brands[j] in row['상품명']:
                     # print(f"{self.brands[j]}이(가) {j}번째에 포함되어 있습니다.")
                     brand_name = self.brands[j]
-                    idx_partner = j
+                    partner_name = self.partners[j]
                     break
-            print(f"{row['상품명']} 은 {brand_name} 브랜드입니다. {j}번째")
-            print(f"업체명: {self.partners[idx_partner]}")
+            # print(f"{row['상품명']} 은 {brand_name} 브랜드입니다. {j}번째")
+            # print(f"업체명: {partner_name}")
 
-            # print("-----------------")
-            # print(row)
-            # print(row['상품명'])
-
-        print("======= self.brands:\n" + str(self.brands), len(self.brands))
-        print("======= self.partners:\n" + str(self.partners), len(self.partners))
+            if partner_name != "":
+                # print(self.order_list['상품명'].str.contains(brand_name))
+                df_filtered = self.order_list[self.order_list['상품명'].str.contains(brand_name)]
+                # print(df_filtered)
+                df_filtered.to_excel(f"[쇼핑몰] {partner_name}.xlsx")
 
 
 if __name__ == '__main__':
