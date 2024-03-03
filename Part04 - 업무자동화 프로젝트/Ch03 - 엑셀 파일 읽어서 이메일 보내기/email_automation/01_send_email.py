@@ -19,10 +19,13 @@ class EmailSender:
         """
 
         with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
+            smtp.starttls()
             smtp.login(self.email_addr, self.password)
-            smtp.sendmail(from_addr=from_addr, to_addrs=to_addr, msg=msg)
+            smtp.sendmail(from_addr=from_addr, to_addrs=to_addr, msg=msg.encode("utf-8"))
             smtp.quit()
+        print("이메일 전송이 완료되었습니다.")
 
 
 if __name__ == '__main__':
     es = EmailSender("polozhzh@gmail.com", os.getenv("MY_GMAIL_PASSWORD"))
+    es.send_email("테스트입니다 2", from_addr="polozhzh@gmail.com", to_addr="polozh@naver.com")
