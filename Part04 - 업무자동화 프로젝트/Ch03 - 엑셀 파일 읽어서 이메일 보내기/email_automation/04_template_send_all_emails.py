@@ -1,6 +1,7 @@
 import os
 import smtplib
 from email.mime.text import MIMEText
+from email.utils import formataddr
 
 from openpyxl import load_workbook
 
@@ -23,7 +24,7 @@ class EmailSender:
         self.smtp_server = self.smtp_server_map[email_addr.split('@')[1]]
         # print(self.smtp_server)
 
-    def send_email(self, msg, from_addr, to_addr, subject):
+    def send_email(self, msg, from_addr, to_addr, to_name, subject):
         """
         :param subject: 제목
         :param msg: 보낼 메시지
@@ -34,8 +35,10 @@ class EmailSender:
         # with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
         with smtplib.SMTP(self.smtp_server, 587) as smtp:
             msg = MIMEText(msg)
-            msg['From'] = from_addr
-            msg['To'] = to_addr
+            # msg['From'] = from_addr
+            # msg['From'] = formataddr(("무역회사", from_addr))
+            msg['From'] = formataddr((self.manager_name, from_addr))
+            msg['To'] = formataddr((to_name, to_addr))
             msg['Subject'] = subject
             # print(msg.as_string())
 
@@ -68,6 +71,7 @@ class EmailSender:
                 self.send_email(msg=temp1,
                                 from_addr=self.email_addr,
                                 to_addr=row[0].value,
+                                to_name=row[1].value,
                                 subject=row[2].value)
 
 
