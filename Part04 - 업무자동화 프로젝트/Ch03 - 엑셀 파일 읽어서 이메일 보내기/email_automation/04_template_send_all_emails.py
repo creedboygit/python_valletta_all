@@ -7,6 +7,7 @@ from openpyxl import load_workbook
 
 class EmailSender:
     email_addr = None
+    manager_name = None
     password = None
     smtp_server_map = {
         "gmail.com": "smtp.gmail.com",
@@ -14,9 +15,10 @@ class EmailSender:
     }
     smtp_server = None
 
-    def __init__(self, email_addr, password):
+    def __init__(self, manager_name, email_addr, password):
         print("생성자")
         self.email_addr = email_addr
+        self.manager_name = manager_name
         self.password = password
         self.smtp_server = self.smtp_server_map[email_addr.split('@')[1]]
         # print(self.smtp_server)
@@ -52,25 +54,30 @@ class EmailSender:
 
         for row in ws.iter_rows(min_row=2):
             temp1 = """
-안녕하세요. 네이버 쇼핑몰입니다.
+안녕하세요. %받는분%님 네이버 쇼핑몰입니다.
 
-            
+금일 쇼핑몰 주문을 보내드립니다.
+확인 부탁드립니다.
+발주 부탁드립니다.
+%매니저명% 드림            
 """
             if row[0].value is not None:
                 print(row[0].value, row[1].value, row[2].value)
-                self.send_email(msg=row[2].value,
+                temp1 = (temp1.replace("%받는분%", row[1].value)
+                         .replace("%매니저명%", self.manager_name))
+                self.send_email(msg=temp1,
                                 from_addr=self.email_addr,
                                 to_addr=row[0].value,
-                                subject=row[1].value)
+                                subject=row[2].value)
 
 
 if __name__ == '__main__':
     # es = EmailSender("polozhzh@gmail.com", os.getenv("MY_GMAIL_PASSWORD"))
     # es.send_email("테스트입니다 2", from_addr="polozhzh@gmail.com", to_addr="polozh@naver.com")
-    es = EmailSender("polozh@naver.com", os.getenv("MY_NAVER_PASSWORD"))
+    es = EmailSender(manager_name="보이스", email_addr="polozh@naver.com", password=os.getenv("MY_NAVER_PASSWORD"))
     # es.send_email("테스트입니다 2", from_addr="polozh@naver.com", to_addr="polozhzh@gmail.com")
     # es.send_email("테스트입니다 2",
     #               from_addr="polozh@naver.com",
     #               to_addr="polozhzh@gmail.com",
     #               subject="이메일 발송 테스트입니다.")
-    es.send_all_emails("sample.xlsx")
+    es.send_all_emails("sample_with_name.xlsx")
