@@ -1,5 +1,6 @@
-import requests
 import json
+
+import requests
 
 url = "https://openapi.naver.com/v1/search/blog.json?query=강남맛집&start=101&display=100"
 res = requests.get(url, headers={"X-Naver-Client-Id": "MKbg5ZHY3dMQtloRuNdu", "X-Naver-Client-Secret": "GwIkrgP1g2"})

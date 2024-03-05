@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
-from openpyxl.styles.borders import BORDER_THICK, BORDER_THIN
+from openpyxl.styles.borders import BORDER_THIN
 from openpyxl.utils import get_column_letter
 
 

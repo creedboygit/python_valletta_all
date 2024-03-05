@@ -1,7 +1,6 @@
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
-import openpyxl
 
 
 def crawl(code):

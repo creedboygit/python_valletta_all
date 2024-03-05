@@ -1,6 +1,5 @@
-from selenium import webdriver
 import chromedriver_autoinstaller
-import time
+from selenium import webdriver
 
 chromedriver_autoinstaller.install()
 

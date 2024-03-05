@@ -1,7 +1,6 @@
-import pprint
+import os
 
 from googleapiclient.discovery import build
-import os
 
 
 class YoutubeApi:

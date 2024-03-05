@@ -1,7 +1,5 @@
-from bs4 import BeautifulSoup
-import pprint
 import pandas as pd
-import openpyxl
+from bs4 import BeautifulSoup
 
 
 def is_list(l, i):

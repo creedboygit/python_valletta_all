@@ -1,6 +1,6 @@
 import socket
+
 import select
-import random
 
 HOST = 'localhost'  # 접속 서버 주소
 PORT = 50007  # 클라이언트 접속을 대기하는 포트 번호

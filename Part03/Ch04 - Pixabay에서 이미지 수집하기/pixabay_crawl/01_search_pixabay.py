@@ -1,8 +1,7 @@
-import chromedriver_autoinstaller
-from selenium import webdriver
-from time import sleep
 from urllib.request import Request, urlopen
 
+import chromedriver_autoinstaller
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 chromedriver_autoinstaller.install()

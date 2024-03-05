@@ -1,7 +1,6 @@
-import pprint
+import os
 
 from googleapiclient.discovery import build
-import os
 
 DEVELOPER_KEY = os.getenv("YOUTUBE_API_KEY")
 

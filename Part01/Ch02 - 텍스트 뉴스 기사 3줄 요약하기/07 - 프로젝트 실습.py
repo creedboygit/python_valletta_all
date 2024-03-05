@@ -1,9 +1,9 @@
 import base64
 import collections
-import textwrap
-import re
-import webbrowser
 import os
+import re
+import textwrap
+import webbrowser
 
 if __name__ == "__main__":
     # 기사 이미지

@@ -2,12 +2,8 @@ import os
 import time
 
 import chromedriver_autoinstaller
-
 from selenium import webdriver
-from selenium.common import NoSuchElementException
 from selenium.webdriver import Keys
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
 chromedriver_autoinstaller.install()

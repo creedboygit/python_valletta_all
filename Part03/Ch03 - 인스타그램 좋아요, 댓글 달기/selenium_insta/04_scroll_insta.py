@@ -1,9 +1,8 @@
-from selenium import webdriver
-import chromedriver_autoinstaller
-import time
-import getpass
 import os
+import time
 
+import chromedriver_autoinstaller
+from selenium import webdriver
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 

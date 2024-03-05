@@ -1,4 +1,5 @@
 import requests
+
 from libs.evparser import EvGoKrSubsidyParser
 
 url = "https://ev.or.kr/nportal/buySupprt/initSubsidyPaymentCheckAction.do"

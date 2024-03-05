@@ -1,8 +1,3 @@
-from bs4 import BeautifulSoup
-import pprint
-import pandas as pd
-import openpyxl
-
 if __name__ == '__main__':
     f = open("local_info.html", encoding="utf-8")
     page_string = f.read()

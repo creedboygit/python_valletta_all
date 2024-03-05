@@ -1,9 +1,8 @@
+import os
 import pprint
+import re
 
 from googleapiclient.discovery import build
-import json
-import re
-import os
 
 
 def get_channel_id(url):

@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter.messagebox import *
+
 from blog_data_model import *
 
 root = Tk()  # tkinter 객체(창) 생성

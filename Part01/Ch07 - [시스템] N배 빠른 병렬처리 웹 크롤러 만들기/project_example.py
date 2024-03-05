@@ -1,11 +1,12 @@
-import logging
-import platform, psutil
-import os
-from bs4 import BeautifulSoup
-import requests
 import argparse
+import logging
+import os
+import platform
+import psutil
+
+import requests
 import schedule
-import time
+from bs4 import BeautifulSoup
 
 # 로거 생성
 logger = logging.getLogger()
