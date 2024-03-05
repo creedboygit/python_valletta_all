@@ -2,6 +2,7 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formataddr
+from email.mime.multipart import MIMEMultipart
 
 from openpyxl import load_workbook
 
@@ -26,22 +27,18 @@ class EmailSender:
         # print(self.smtp_server)
         self.template_file_name = template_file_name
 
-    def send_email(self, msg, from_addr, to_addr, to_name, subject):
-        """
-        :param subject: 제목
-        :param msg: 보낼 메시지
-        :param from_addr: 보내는 사람
-        :param to_addr: 받는 사람
-        """
+    def send_email(self, html_msg, from_addr, to_addr, to_name, subject):
 
         # with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
         with smtplib.SMTP(self.smtp_server, 587) as smtp:
-            msg = MIMEText(msg)
+            # msg = MIMEText(msg)
+            msg = MIMEMultipart("alternative")
             # msg['From'] = from_addr
             # msg['From'] = formataddr(("무역회사", from_addr))
             msg['From'] = formataddr((self.manager_name, from_addr))
             msg['To'] = formataddr((to_name, to_addr))
             msg['Subject'] = subject
+            msg.attach(MIMEText(html_msg, 'html', 'utf-8'))
             # print(msg.as_string())
 
             smtp.starttls()
@@ -58,21 +55,22 @@ class EmailSender:
         ws = wb.active
 
         for row in ws.iter_rows(min_row=2):
-            temp1 = ""
-            with open(self.template_file_name, encoding='utf-8') as f:
-                temp1 = f.read()
-
-            print("======= temp1:\n" + str(temp1))
-
             if row[0].value is not None:
-                print(row[0].value, row[1].value, row[2].value)
-                temp1 = (temp1.replace("%받는분%", row[1].value)
-                         .replace("%매니저명%", self.manager_name))
-                self.send_email(msg=temp1,
-                                from_addr=self.email_addr,
-                                to_addr=row[0].value,
-                                to_name=row[1].value,
-                                subject=row[2].value)
+                with open(self.template_file_name, encoding='utf-8') as f:
+                    temp1 = f.read()
+
+                    print("======= temp1:\n" + str(temp1))
+
+                    print(row[0].value, row[1].value, row[2].value)
+                    temp1 = (temp1.replace("%받는분%", row[1].value)
+                             .replace("%매니저명%", self.manager_name))
+                    self.send_email(html_msg=temp1,
+                                    from_addr=self.email_addr,
+                                    to_addr=row[0].value,
+                                    to_name=row[1].value,
+                                    subject=row[2].value)
+            else:
+                print('row[0]이 None입니다.')
 
 
 if __name__ == '__main__':
