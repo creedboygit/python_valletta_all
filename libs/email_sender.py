@@ -3,6 +3,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formataddr
+import datetime
 
 from openpyxl import load_workbook
 
@@ -37,7 +38,7 @@ class EmailSender:
             # msg['From'] = formataddr(("무역회사", from_addr))
             msg['From'] = formataddr((self.manager_name, from_addr))
             msg['To'] = formataddr((to_name, to_addr))
-            msg['Subject'] = subject + str(datetime.now())
+            msg['Subject'] = subject + " - " + str(datetime.datetime.now())
             msg.attach(MIMEText(html_msg, 'html', 'utf-8'))
             # print(msg.as_string())
 
